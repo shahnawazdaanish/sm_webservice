@@ -28,7 +28,7 @@ class PlatformProvider extends OrchidServiceProvider
     public function registerMainMenu(): array
     {
         return [
-            Menu::make('Example screen')
+            /*Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')
                 ->title('Navigation')
@@ -77,7 +77,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('shuffle')
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK()),
+                ->badge(fn () => Dashboard::version(), Color::DARK()),*/
 
             Menu::make(__('Users'))
                 ->icon('user')
@@ -90,10 +90,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
 
-            Menu::make('Email sender')
+            /*Menu::make('Email sender')
                 ->icon('envelope-letter')
                 ->route('platform.email')
-                ->title('Tools'),
+                ->title('Tools'),*/
         ];
     }
 
