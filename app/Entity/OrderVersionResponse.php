@@ -17,6 +17,7 @@ class OrderVersionResponse extends Model
     use HasFactory;
 
     protected $table = 'order_version_response';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     private string $OrderID;

@@ -9,6 +9,7 @@ class OrderRequestResponse extends Model
     use HasFactory;
 
     protected $table = 'order_request_response';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     private array $OrderVersionResponse;

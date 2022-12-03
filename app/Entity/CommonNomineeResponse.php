@@ -10,6 +10,7 @@ class CommonNomineeResponse extends Model
     use HasFactory;
 
     protected $table = 'common_nominee_response';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     private bool $Status;

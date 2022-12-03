@@ -10,6 +10,7 @@ class OrderRequest extends Model
     use HasFactory;
 
     protected $table = 'order_request';
+    protected $connection = 'oracle';
 
     private string $OrderID;
     private string $VPOrderID;

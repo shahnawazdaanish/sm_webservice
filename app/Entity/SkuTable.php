@@ -20,6 +20,7 @@ class SkuTable extends Model
     use HasFactory;
 
     protected $table = 'sku_tables';
+    protected $connection = 'oracle';
 
     private string $LabelID;
     private string $SkuID;

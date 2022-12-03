@@ -10,6 +10,7 @@ class CILorderRequest extends Model
     use HasFactory;
 
     protected $table = 'cil_order_request';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     private string $OrderID;

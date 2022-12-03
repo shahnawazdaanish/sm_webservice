@@ -10,6 +10,7 @@ class GetContractVersionRequest extends Model
     use HasFactory;
 
     protected $table = 'get_contract_version_request';
+    protected $connection = 'oracle';
 
     private string $RequestID;
 

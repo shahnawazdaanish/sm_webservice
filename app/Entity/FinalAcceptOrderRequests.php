@@ -10,6 +10,7 @@ class FinalAcceptOrderRequests extends Model
     use HasFactory;
 
     protected $table = 'FINAL_ACCEPT_ORDER_REQUESTS';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     /** @var array|FinalAcceptOrderRequest[] $FinalAcceptOrderRequest */

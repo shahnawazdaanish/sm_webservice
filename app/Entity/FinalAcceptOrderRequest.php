@@ -9,6 +9,7 @@ class FinalAcceptOrderRequest extends Model
     use HasFactory;
 
     protected $table = 'FINAL_ACCEPT_ORDER_REQUEST';
+    protected $connection = 'oracle';
 
     private string $OrderID;
     private int $Version;

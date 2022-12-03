@@ -10,6 +10,7 @@ class OrderRejectRFCRequest extends Model
     use HasFactory;
 
     protected $table = 'order_reject_rfc_request';
+    protected $connection = 'oracle';
 
     private string $RequestID;
     private string $RFCID;

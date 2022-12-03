@@ -10,6 +10,7 @@ class CILFile extends Model
     use HasFactory;
 
     protected $table = 'cil_files';
+    protected $connection = 'oracle';
 
     private string $gtin;
     private string $serial_number;
