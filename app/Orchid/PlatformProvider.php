@@ -94,6 +94,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('envelope-letter')
                 ->route('platform.email')
                 ->title('Tools'),*/
+
+
+            Menu::make(__('Orders'))
+                ->icon('lock')
+                ->route('platform.order.list'),
         ];
     }
 

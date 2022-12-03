@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Screen\AsSource;
 
 class OrderRequest extends Model
 {
     use HasFactory;
+    use AsSource;
 
     protected $table = 'order_request';
     protected $connection = 'oracle';

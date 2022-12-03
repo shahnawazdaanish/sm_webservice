@@ -10,6 +10,8 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\OrderListScreen;
+use App\Orchid\Screens\OrderViewScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -105,6 +107,13 @@ Route::screen('email', EmailSenderScreen::class)
             ->parent('platform.index')
             ->push('Email sender');
     })
+;
+
+Route::screen('orders', OrderListScreen::class)
+    ->name('platform.order.list')
+;
+Route::screen('order/{orderRequest?}', OrderViewScreen::class)
+    ->name('platform.order.view')
 ;
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');
