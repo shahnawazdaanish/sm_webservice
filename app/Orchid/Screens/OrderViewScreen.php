@@ -44,6 +44,7 @@ class OrderViewScreen extends Screen
     {
         return [
             Button::make('Accept Order')
+                ->confirm('Accept Order')
                 ->icon('call-in')
                 ->method('acceptOrder')
                 ->canSee($this->orderRequest->exists),

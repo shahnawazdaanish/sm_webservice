@@ -23,3 +23,4 @@ Route::get('/', function () {
 
 
 Route::any('WebService/Nominee.asmx', [NomineeController::class, 'index']);
+Route::any('Webservice/Nominee.asmx', [NomineeController::class, 'index']);
