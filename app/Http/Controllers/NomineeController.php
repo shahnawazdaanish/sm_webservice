@@ -19,7 +19,7 @@ class NomineeController extends Controller
         $soapServer->setObject($nomineeService);
 
         $response = new Response();
-        $response->headers->set('Content-Type', 'application/soap; charset=ISO-8859-1');
+        $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
 
         ob_start();
         $soapServer->handle();
