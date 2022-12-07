@@ -41,6 +41,35 @@ class NomineeService
         $this->CILOrderRequestConverter = $CILOrderRequestConverter;
     }
 
+    public function OrderRequests($request): RequestResponse
+    {
+        Log::info('Order Requests JSON ===> ' . json_encode($request));
+        Log::info('Order Requests', json_decode(json_encode($request), true));
+
+        $orderRequest = $this->orderRequestConverter->convert($request->Request);
+
+        $orderVersionResponses = [];
+        if (count($orderRequest->getOrderRequests()) > 0) {
+            foreach ($orderRequest->getOrderRequests() as $orderRequestItem) {
+                $orderVersionResponse = new OrderVersionResponse();
+                $orderVersionResponse->setRequestID($orderRequest->getRequestID());
+                $orderVersionResponse->setOrderID($orderRequestItem->getOrderID());
+                $orderVersionResponse->setVersion($orderRequestItem->getVersion());
+                $orderVersionResponse->setStatus(true);
+                $orderVersionResponse->setErrorMessage('');
+                $orderVersionResponse->setErrorCode(0);
+
+                $orderVersionResponses[] = $orderVersionResponse;
+            }
+        }
+
+        $orderRequestResponse = new OrderRequestResponse();
+        $orderRequestResponse->setRequestID($orderRequest->getRequestID());
+        $orderRequestResponse->setOrderVersionResponse($orderVersionResponses);
+
+        return (new RequestResponse())->setReturn($orderRequestResponse);
+    }
+
     public function OrderRequest($request): RequestResponse
     {
         Log::info('Request ===> ' . json_encode($request));

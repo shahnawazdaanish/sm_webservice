@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\NomineeService;
+use Illuminate\Support\Facades\Log;
 use SoapServer;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -10,6 +11,7 @@ class NomineeController extends Controller
 {
     public function index(NomineeService $nomineeService): Response
     {
+        Log::info(json_encode(request()->all()));
         $soapServer = new SoapServer(
             storage_path('app/soap.wsdl'),
             [
