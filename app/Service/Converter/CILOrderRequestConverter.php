@@ -25,32 +25,38 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         $cilFiles = [];
         if (isset($request->CILFile) && is_array($request->CILFile)) {
             foreach ($request->CILFile as $cilFileItem) {
-                $cilFile = new CILFile();
-                $cilFile->CILOrderRequestID = $cilOrderRequest->id;
-                $cilFile->CILRequestNumber =$request->CILRequestNumber ?? 0;
-                $cilFile->RequestID = $request->RequestID;
-                $cilFile->setGtin($cilFileItem->gtin ?? '');
-                $cilFile->setSerialNumber($cilFileItem->serial_number ?? '');
-                $cilFile->setSecurityCode($cilFileItem->security_code ?? '');
-                $cilFile->setESignature($cilFileItem->e_signature ?? '');
-                $cilFile->setHsCode($cilFileItem->hs_code ?? '');
-                $cilFile->setBarcode($cilFileItem->barcode ?? '');
-                $cilFile->setCodeTd($cilFileItem->code_td ?? '');
-                $cilFile->setStyle($cilFileItem->style ?? '');
-                $cilFile->setColor($cilFileItem->color ?? '');
-                $cilFile->setSize($cilFileItem->size ?? '');
-                $cilFile->setExtSize($cilFileItem->ext_size ?? '');
-                $cilFile->setProductSpecific($cilFileItem->product_specific ?? '');
-                $cilFile->setIndex($cilFileItem->index ?? 0);
-                $cilFile->setFoc($cilFileItem->foc ?? false);
-                $cilFile->save();
-
-                $cilFiles[] = $cilFile;
+                $cilFiles[] = $this->prepareObject($cilOrderRequest, $request, $cilFileItem);
             }
+        } elseif (isset($request->CILFile) && is_object($request->CILFile)) {
+            $cilFiles[] = $this->prepareObject($cilOrderRequest, $request, $request->CILFile);
         }
 
         $cilOrderRequest->setCILFile($cilFiles);
 
         return $cilOrderRequest;
+    }
+
+    private function prepareObject(CILorderRequest $cilOrderRequest, $request, mixed $cilFileItem): CILFile
+    {
+        $cilFile = new CILFile();
+        $cilFile->CILOrderRequestID = $cilOrderRequest->id;
+        $cilFile->CILRequestNumber = $request->CILRequestNumber ?? 0;
+        $cilFile->RequestID = $request->RequestID;
+        $cilFile->setGtin($cilFileItem->gtin ?? '');
+        $cilFile->setSerialNumber($cilFileItem->serial_number ?? '');
+        $cilFile->setSecurityCode($cilFileItem->security_code ?? '');
+        $cilFile->setESignature($cilFileItem->e_signature ?? '');
+        $cilFile->setHsCode($cilFileItem->hs_code ?? '');
+        $cilFile->setBarcode($cilFileItem->barcode ?? '');
+        $cilFile->setCodeTd($cilFileItem->code_td ?? '');
+        $cilFile->setStyle($cilFileItem->style ?? '');
+        $cilFile->setColor($cilFileItem->color ?? '');
+        $cilFile->setSize($cilFileItem->size ?? '');
+        $cilFile->setExtSize($cilFileItem->ext_size ?? '');
+        $cilFile->setProductSpecific($cilFileItem->product_specific ?? '');
+        $cilFile->setIndex($cilFileItem->index ?? 0);
+        $cilFile->setFoc($cilFileItem->foc ?? false);
+        $cilFile->save();
+        return $cilFile;
     }
 }
