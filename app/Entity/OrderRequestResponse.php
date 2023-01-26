@@ -51,4 +51,11 @@ class OrderRequestResponse extends Model
         return $this;
     }
 
+    public function __toString()
+    {
+        return json_encode([
+            'RequestID' => $this->RequestID,
+            'OrderVersionResponse' => $this->OrderVersionResponse,
+        ]);
+    }
 }

@@ -66,6 +66,7 @@ class NomineeService
         $orderRequestResponse = new OrderRequestResponse();
         $orderRequestResponse->setRequestID($orderRequest->getRequestID());
         $orderRequestResponse->setOrderVersionResponse($orderVersionResponses);
+        Log::info('Order Response' . $orderRequestResponse);
 
         return (new RequestResponse())->setReturn($orderRequestResponse);
     }
@@ -95,6 +96,7 @@ class NomineeService
         $orderRequestResponse = new OrderRequestResponse();
         $orderRequestResponse->setRequestID($orderRequest->getRequestID());
         $orderRequestResponse->setOrderVersionResponse($orderVersionResponses);
+        Log::info('Order Response' . $orderRequestResponse);
 
         return (new RequestResponse())->setReturn($orderRequestResponse);
     }
