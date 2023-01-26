@@ -112,6 +112,8 @@ class NomineeService
         $cilResponse->setErrorMessage('');
         $cilResponse->setRequestID($CILorderRequest->getRequestID());
 
+        Log::info('CIL Order Response' . $cilResponse);
+
         return $cilResponse;
     }
 

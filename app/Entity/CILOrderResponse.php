@@ -80,4 +80,14 @@ class CILOrderResponse
         $this->ErrorMessage = $ErrorMessage;
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return json_encode([
+            'RequestID' => $this->RequestID,
+            'Status' => $this->Status,
+            'ErrorCode' => $this->ErrorCode,
+            'ErrorMessage' => $this->ErrorMessage,
+        ]);
+    }
 }
