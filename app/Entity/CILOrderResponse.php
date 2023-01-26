@@ -80,5 +80,4 @@ class CILOrderResponse
         $this->ErrorMessage = $ErrorMessage;
         return $this;
     }
-
 }

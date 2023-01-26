@@ -4,12 +4,12 @@ namespace App\Entity;
 
 class RequestResponse
 {
-    private $return;
+    private mixed $return;
 
     /**
      * @return mixed
      */
-    public function getReturn()
+    public function getReturn(): mixed
     {
         return $this->return;
     }
@@ -18,7 +18,7 @@ class RequestResponse
      * @param mixed $return
      * @return RequestResponse
      */
-    public function setReturn($return)
+    public function setReturn(mixed $return): static
     {
         $response = new CommonNomineeResponse();
         $response->setStatus(true);
@@ -31,5 +31,4 @@ class RequestResponse
         $this->return = $return;
         return $this;
     }
-
 }

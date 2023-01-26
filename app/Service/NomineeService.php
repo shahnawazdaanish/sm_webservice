@@ -99,12 +99,12 @@ class NomineeService
         return (new RequestResponse())->setReturn($orderRequestResponse);
     }
 
-    public function CILorderRequest($request): RequestResponse
+    public function CILorderRequest($request): CILOrderResponse
     {
         Log::info('Request ===> ' . json_encode($request));
         Log::info('CIL Order Request', json_decode(json_encode($request), true));
 
-        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request);
+        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request ?? $request);
 
         $cilResponse = new CILOrderResponse();
         $cilResponse->setStatus(true);
@@ -112,7 +112,7 @@ class NomineeService
         $cilResponse->setErrorMessage('');
         $cilResponse->setRequestID($CILorderRequest->getRequestID());
 
-        return (new RequestResponse())->setReturn($cilResponse);
+        return $cilResponse;
     }
 
     public function OrderRejectRFCRequest($request)

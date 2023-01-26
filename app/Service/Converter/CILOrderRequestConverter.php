@@ -15,7 +15,6 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         $cilOrderRequest->setCILRequestNumber($request->CILRequestNumber ?? 0);
         $cilOrderRequest->save();
 
-
         if (isset($request->CILFile) && is_object($request->CILFile)) {
             $cilFile = $request->CILFile;
             $request->CILFile = [];
