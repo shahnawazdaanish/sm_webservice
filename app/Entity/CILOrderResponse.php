@@ -6,7 +6,7 @@ class CILOrderResponse
 {
     private string $RequestID;
     private bool $Status;
-    private int $ErrorCode;
+    private ?int $ErrorCode;
     private string $ErrorMessage;
 
     /**
@@ -48,9 +48,9 @@ class CILOrderResponse
     /**
      * @return int
      */
-    public function getErrorCode(): int
+    public function getErrorCode(): ?int
     {
-        return $this->ErrorCode;
+        return $this->ErrorCode ?? null;
     }
 
     /**
@@ -86,7 +86,6 @@ class CILOrderResponse
         return json_encode([
             'RequestID' => $this->RequestID,
             'Status' => $this->Status,
-            'ErrorCode' => $this->ErrorCode,
             'ErrorMessage' => $this->ErrorMessage,
         ]);
     }
