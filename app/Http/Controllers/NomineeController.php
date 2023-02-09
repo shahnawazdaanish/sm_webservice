@@ -26,14 +26,8 @@ class NomineeController extends Controller
 
         ob_start();
         $soapServer->handle();
-        $result = ob_get_contents();
         $response->setContent(ob_get_clean());
 
-        $result = str_replace(["SOAP-ENV", 'ns1:', ':ns1'], ["soap", '', ''], $result);
-        $length = strlen($result);
-
-        header("Content-Length: ".$length);
-
-        return $response->setContent($result);
+        return $response;
     }
 }
