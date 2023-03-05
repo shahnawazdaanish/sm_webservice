@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         Log::info('Scheduler Works!');
         // $schedule->command('inspire')->hourly();
-        $schedule->command('queue:work --stop-when-empty')
+        $schedule->command('queue:work')
             ->everyMinute()
             ->withoutOverlapping();
     }
