@@ -4,6 +4,7 @@ namespace App\Service\Converter;
 
 use App\Entity\CILFile;
 use App\Entity\CILorderRequest;
+use App\Jobs\StoreCILFilesJob;
 
 class CILOrderRequestConverter implements ConverterServiceInterface
 {
@@ -31,6 +32,7 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         }
 
         $cilOrderRequest->setCILFile($cilFiles);
+        StoreCILFilesJob::dispatch($cilFiles);
 
         return $cilOrderRequest;
     }
@@ -55,7 +57,6 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         $cilFile->setProductSpecific($cilFileItem->product_specific ?? '');
         $cilFile->setIndex($cilFileItem->index ?? 0);
         $cilFile->setFoc($cilFileItem->foc ?? false);
-        $cilFile->save();
         return $cilFile;
     }
 }
