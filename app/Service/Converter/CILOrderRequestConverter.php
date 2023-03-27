@@ -24,7 +24,7 @@ class CILOrderRequestConverter implements ConverterServiceInterface
                     'order_id' => $request->OrderID ?? '',
                     'cil_request_number' => $request->CILRequestNumber ?? '0',
                     'data' => json_encode($request),
-                    'created_at' => date('now'),
+                    'created_at' => date('Y-m-d H:i:s'),
                 ]
             )
         ;
