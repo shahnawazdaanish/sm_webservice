@@ -15,7 +15,6 @@ use App\Service\Converter\FinalAcceptOrderRequestsConverter;
 use App\Service\Converter\GetContractVersionRequestConverter;
 use App\Service\Converter\OrderRejectRFCRequestConverter;
 use App\Service\Converter\OrderRequestConverter;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use stdClass;
 
@@ -106,21 +105,14 @@ class NomineeService
     {
         Log::info('CIL Order Request', json_decode(json_encode($request), true));
 
-        DB::connection('mysql')->table('cil_requests')->insert(
-            [
-                'data' => json_encode($request),
-                'created_at' => date('now')
-            ]
-        );
-
-//        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request ?? $request);
+        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request ?? $request);
 
         $cilResponse = new CILOrderResponse();
         $cilResponse->setStatus(true);
         $cilResponse->setErrorMessage('');
-        $cilResponse->setRequestID('');
+        $cilResponse->setRequestID($CILorderRequest->getRequestID());
 
-//        Log::info('CIL Order Response' . $cilResponse);
+        Log::info('CIL Order Response' . $cilResponse);
 
         return (new RequestResponse())->setReturn($cilResponse);
     }

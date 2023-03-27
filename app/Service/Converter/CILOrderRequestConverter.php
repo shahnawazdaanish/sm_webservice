@@ -5,6 +5,7 @@ namespace App\Service\Converter;
 use App\Entity\CILFile;
 use App\Entity\CILorderRequest;
 use App\Jobs\StoreCILFilesJob;
+use Illuminate\Support\Facades\DB;
 
 class CILOrderRequestConverter implements ConverterServiceInterface
 {
@@ -16,7 +17,18 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         $cilOrderRequest->setCILRequestNumber($request->CILRequestNumber ?? 0);
         $cilOrderRequest->save();
 
-        if (isset($request->CILFile) && is_object($request->CILFile)) {
+        DB::connection('mysql')->table('cil_requests')
+            ->insert(
+                [
+                    'request_id' => $request->RequestID ?? '',
+                    'order_id' => $request->OrderID ?? '',
+                    'cil_request_number' => $request->CILRequestNumber ?? '0',
+                    'data' => json_encode($request),
+                ]
+            )
+        ;
+
+        /*if (isset($request->CILFile) && is_object($request->CILFile)) {
             $cilFile = $request->CILFile;
             $request->CILFile = [];
             $request->CILFile[] = $cilFile;
@@ -32,7 +44,7 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         }
 
         $cilOrderRequest->setCILFile($cilFiles);
-        StoreCILFilesJob::dispatch($cilFiles);
+        StoreCILFilesJob::dispatch($cilFiles);*/
 
         return $cilOrderRequest;
     }
