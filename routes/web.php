@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $data = \Illuminate\Support\Facades\DB::connection('mysql')->table('cil_requests')
+        ->first();
+    return $data;
     return 'Hello, You are not supposed to be here';
 });
 
