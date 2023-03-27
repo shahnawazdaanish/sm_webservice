@@ -103,17 +103,16 @@ class NomineeService
 
     public function CILorderRequest($request): RequestResponse
     {
-        Log::info('Request ===> ' . json_encode($request));
         Log::info('CIL Order Request', json_decode(json_encode($request), true));
 
-        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request ?? $request);
+//        $CILorderRequest = $this->CILOrderRequestConverter->convert($request->Request ?? $request);
 
         $cilResponse = new CILOrderResponse();
         $cilResponse->setStatus(true);
         $cilResponse->setErrorMessage('');
-        $cilResponse->setRequestID($CILorderRequest->getRequestID());
+        $cilResponse->setRequestID('');
 
-        Log::info('CIL Order Response' . $cilResponse);
+//        Log::info('CIL Order Response' . $cilResponse);
 
         return (new RequestResponse())->setReturn($cilResponse);
     }
