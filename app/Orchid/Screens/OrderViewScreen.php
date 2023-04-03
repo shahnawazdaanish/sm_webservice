@@ -261,9 +261,8 @@ class OrderViewScreen extends Screen
                Layout::rows([
                    Label::make('synced')
                    ->title('Synced'),
-
                    Label::make('updated_at')
-                       ->value($this->tempCilRequest->synced),
+                       ->value($this->tempCilRequest !== null ? $this->tempCilRequest->synced : 'N/A'),
                ]),
             ]),
         ];
