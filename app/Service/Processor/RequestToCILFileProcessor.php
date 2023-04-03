@@ -50,8 +50,8 @@ class RequestToCILFileProcessor
     {
         $cilFile = new CILFile();
         $cilFile->CILOrderRequestID = $cilOrderRequest->id;
-        $cilFile->CILRequestNumber = $cilOrderRequest->CILRequestNumber ?? 0;
-        $cilFile->RequestID = $cilOrderRequest->RequestID;
+        $cilFile->CILRequestNumber = $cilOrderRequest->cilrequestnumber ?? 0;
+        $cilFile->RequestID = $cilOrderRequest->requestid;
         $cilFile->setGtin($cilFileItem->gtin ?? '');
         $cilFile->setSerialNumber($cilFileItem->serial_number ?? '');
         $cilFile->setSecurityCode($cilFileItem->security_code ?? '');

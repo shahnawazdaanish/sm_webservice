@@ -33,7 +33,7 @@ class ProcessCILs extends Command
     public function handle(): int
     {
         $tempCilRequest = TempCILRequests::where(['synced' => 0])
-            ->firstOrFail()
+            ->first()
         ;
 
         if($tempCilRequest !== null) {
