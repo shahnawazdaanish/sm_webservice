@@ -21,6 +21,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work')
             ->everyMinute()
             ->withoutOverlapping();
+
+        $schedule->command('process:cils')
+            ->everyFiveMinutes()
+            ->withoutOverlapping()
+        ;
     }
 
     /**
