@@ -18,10 +18,8 @@ class OrderListScreen extends Screen
      */
     public function query(): iterable
     {
-        $posts = OrderRequest::paginate();
-
         return [
-            'orderRequests' => OrderRequest::paginate()
+            'orderRequests' => OrderRequest::orderBy('id','desc')->paginate()
         ];
     }
 
