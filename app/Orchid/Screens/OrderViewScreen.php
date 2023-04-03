@@ -24,7 +24,7 @@ class OrderViewScreen extends Screen
     {
         return [
             'orderRequest' => $orderRequest,
-            'tempCilRequest' => TempCILRequests::where([$orderRequest->request_id => $orderRequest->requestid])->first(),
+            'tempCilRequest' => TempCILRequests::where(['request_id' => $orderRequest->requestid])->first(),
         ];
     }
 
