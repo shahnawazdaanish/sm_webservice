@@ -19,13 +19,15 @@ class RequestToCILFileProcessor
 
         try {
             if ($data !== null) {
+                $cilOrderRequest = CILorderRequest::where(['requestid' => $tempCilRequest->request_id])->firstOrFail();
+
                 if (is_object($data->CILFile)) {
-                    $this->prepareObject($tempCilRequest, $data, $data->CILFile);
+                    $this->prepareObject($cilOrderRequest, $data->CILFile);
                 }
 
                 if (is_array($data->CILFile)) {
                     foreach ($data->CILFile as $cilItem) {
-                        $this->prepareObject($tempCilRequest, $data, $cilItem);
+                        $this->prepareObject($cilOrderRequest, $cilItem);
                     }
                 }
 
@@ -44,12 +46,12 @@ class RequestToCILFileProcessor
         return true;
     }
 
-    private function prepareObject(TempCILRequests $tempCilRequest, $request, mixed $cilFileItem): void
+    private function prepareObject(CILorderRequest $cilOrderRequest, mixed $cilFileItem): void
     {
         $cilFile = new CILFile();
-        $cilFile->CILOrderRequestID = $tempCilRequest->id;
-        $cilFile->CILRequestNumber = $request->CILRequestNumber ?? 0;
-        $cilFile->RequestID = $request->RequestID;
+        $cilFile->CILOrderRequestID = $cilOrderRequest->id;
+        $cilFile->CILRequestNumber = $cilOrderRequest->CILRequestNumber ?? 0;
+        $cilFile->RequestID = $cilOrderRequest->RequestID;
         $cilFile->setGtin($cilFileItem->gtin ?? '');
         $cilFile->setSerialNumber($cilFileItem->serial_number ?? '');
         $cilFile->setSecurityCode($cilFileItem->security_code ?? '');
