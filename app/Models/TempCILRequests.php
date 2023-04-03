@@ -9,6 +9,6 @@ class TempCILRequests extends Model
 {
     use HasFactory;
 
-    public $connection = 'mysql';
-    public $table = 'temp_cil_requests';
+    protected $connection = 'mysql';
+    protected $table = 'temp_cil_requests';
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Entity\CILorderRequest;
+use App\Models\TempCILRequests;
 use App\Service\Processor\RequestToCILFileProcessor;
 use Exception;
 use Illuminate\Console\Command;
@@ -31,16 +32,16 @@ class ProcessCILs extends Command
      */
     public function handle(): int
     {
-        $cilOrderRequest = CILorderRequest::where(['synced' => 0])
+        $tempCilRequest = TempCILRequests::where(['synced' => 0])
             ->firstOrFail()
         ;
 
-        if($cilOrderRequest !== null) {
+        if($tempCilRequest !== null) {
             try {
-                $isProcessed = (new RequestToCILFileProcessor())->process($cilOrderRequest);
+                $isProcessed = (new RequestToCILFileProcessor())->process($tempCilRequest);
                 return $isProcessed ? Command::SUCCESS : Command::FAILURE;
             } catch (Exception $exception) {
-                Log::warning("Error processing: cilOrderRequest ==> " . $cilOrderRequest->id, [$exception]);
+                Log::warning("Error processing: cilOrderRequest ==> " . $tempCilRequest->id, [$exception]);
                 return Command::FAILURE;
             }
         } else {

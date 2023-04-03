@@ -11,10 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 class RequestToCILFileProcessor
 {
-    public function process(CILorderRequest $orderRequest): bool
+    public function process(TempCILRequests $tempCilRequest): bool
     {
-        $tempCilRequest = TempCILRequests::where(['request_id' => $orderRequest->requestid])->firstOrFail();
-
         $data = json_decode($tempCilRequest->data);
 
         DB::beginTransaction();
@@ -22,12 +20,12 @@ class RequestToCILFileProcessor
         try {
             if ($data !== null) {
                 if (is_object($data->CILFile)) {
-                    $this->prepareObject($orderRequest, $data, $data->CILFile);
+                    $this->prepareObject($tempCilRequest, $data, $data->CILFile);
                 }
 
                 if (is_array($data->CILFile)) {
                     foreach ($data->CILFile as $cilItem) {
-                        $this->prepareObject($orderRequest, $data, $cilItem);
+                        $this->prepareObject($tempCilRequest, $data, $cilItem);
                     }
                 }
 
