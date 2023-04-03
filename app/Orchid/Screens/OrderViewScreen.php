@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens;
 
 use App\Entity\OrderRequest;
+use App\Models\TempCILRequests;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Label;
@@ -13,6 +14,7 @@ use Orchid\Support\Facades\Layout;
 class OrderViewScreen extends Screen
 {
     public $orderRequest;
+    public $tempCilRequest;
     /**
      * Query data.
      *
@@ -21,7 +23,8 @@ class OrderViewScreen extends Screen
     public function query(OrderRequest $orderRequest): iterable
     {
         return [
-            'orderRequest' => $orderRequest
+            'orderRequest' => $orderRequest,
+            'tempCilRequest' => TempCILRequests::where([$orderRequest->request_id => $orderRequest->requestid])->first(),
         ];
     }
 
@@ -243,6 +246,24 @@ class OrderViewScreen extends Screen
 
                    Label::make('updated_at')
                        ->value($this->orderRequest->updated_at),
+               ]),
+            ]),
+            Layout::columns([
+               Layout::rows([
+                   Label::make('updated_at')
+                   ->title('Last Updated'),
+
+                   Label::make('updated_at')
+                       ->value($this->orderRequest->updated_at),
+               ]),
+            ]),
+            Layout::columns([
+               Layout::rows([
+                   Label::make('synced')
+                   ->title('Synced'),
+
+                   Label::make('updated_at')
+                       ->value($this->tempCilRequest->synced),
                ]),
             ]),
         ];
