@@ -44,10 +44,10 @@ class RequestToCILFileProcessor
         return true;
     }
 
-    private function prepareObject(CILorderRequest $cilOrderRequest, $request, mixed $cilFileItem): void
+    private function prepareObject(TempCILRequests $tempCilRequest, $request, mixed $cilFileItem): void
     {
         $cilFile = new CILFile();
-        $cilFile->CILOrderRequestID = $cilOrderRequest->id;
+        $cilFile->CILOrderRequestID = $tempCilRequest->id;
         $cilFile->CILRequestNumber = $request->CILRequestNumber ?? 0;
         $cilFile->RequestID = $request->RequestID;
         $cilFile->setGtin($cilFileItem->gtin ?? '');
