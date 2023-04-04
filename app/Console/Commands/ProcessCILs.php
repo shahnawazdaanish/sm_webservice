@@ -37,11 +37,13 @@ class ProcessCILs extends Command
         ;
 
         if($tempCilRequest !== null) {
+            $logPrefix = "cilOrderRequest ==> " . $tempCilRequest->id . ' <=== ';
             try {
                 $isProcessed = (new RequestToCILFileProcessor())->process($tempCilRequest);
+                Log::info($logPrefix . "isProcessed: ". $isProcessed);
                 return $isProcessed ? Command::SUCCESS : Command::FAILURE;
             } catch (Exception $exception) {
-                Log::warning("Error processing: cilOrderRequest ==> " . $tempCilRequest->id, [$exception]);
+                Log::warning($logPrefix . 'Exception', [$exception]);
                 return Command::FAILURE;
             }
         } else {

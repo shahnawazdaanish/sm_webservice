@@ -13,6 +13,7 @@ class RequestToCILFileProcessor
 {
     public function process(TempCILRequests $tempCilRequest): bool
     {
+        $logPrefix = "cilOrderRequest ==> " . $tempCilRequest->id . ' <=== ';
         $data = json_decode($tempCilRequest->data);
 
         DB::beginTransaction();
@@ -35,6 +36,8 @@ class RequestToCILFileProcessor
                 $tempCilRequest->save();
 
                 DB::commit();
+            } else {
+                Log::warning($logPrefix . "Data is null", $data);
             }
         }
         catch (Exception $exception) {
