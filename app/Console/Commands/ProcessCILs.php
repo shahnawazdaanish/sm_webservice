@@ -35,6 +35,7 @@ class ProcessCILs extends Command
         $tempCilRequest = TempCILRequests::where(['synced' => 0])->orderBy('id', 'desc')
             ->first()
         ;
+        Log::info('Took CIL Temp Request: ' . ( $tempCilRequest !== null ? $tempCilRequest->id : 'N/A') );
 
         if($tempCilRequest !== null) {
             $logPrefix = "cilOrderRequest ==> " . $tempCilRequest->id . ' <=== ';
