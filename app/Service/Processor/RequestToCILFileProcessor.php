@@ -14,6 +14,7 @@ class RequestToCILFileProcessor
     public function process(TempCILRequests $tempCilRequest): bool
     {
         $logPrefix = "cilOrderRequest ==> " . $tempCilRequest->id . ' <=== ';
+        Log::info("json". $tempCilRequest->data);
         $data = json_decode($tempCilRequest->data);
 
         DB::beginTransaction();
