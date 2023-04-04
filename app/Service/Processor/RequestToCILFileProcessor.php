@@ -37,7 +37,7 @@ class RequestToCILFileProcessor
 
                 DB::commit();
             } else {
-                Log::warning($logPrefix . "Data is null", $data);
+                Log::warning($logPrefix . "Data is null");
             }
         }
         catch (Exception $exception) {
