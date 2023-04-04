@@ -17,6 +17,9 @@ class RequestToCILFileProcessor
         Log::info("json". $tempCilRequest->data);
         $data = json_decode($tempCilRequest->data);
 
+        $tempCilRequest->synced = 1;
+        $tempCilRequest->save();
+
         DB::beginTransaction();
 
         try {
@@ -36,7 +39,7 @@ class RequestToCILFileProcessor
                 Log::warning($logPrefix . "Data is null");
             }
 
-            $tempCilRequest->synced = 1;
+            $tempCilRequest->synced = 2;
             $tempCilRequest->save();
 
             DB::commit();
