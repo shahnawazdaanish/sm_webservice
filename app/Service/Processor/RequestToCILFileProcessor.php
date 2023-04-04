@@ -31,14 +31,14 @@ class RequestToCILFileProcessor
                         $this->prepareObject($cilOrderRequest, $cilItem);
                     }
                 }
-
-                $tempCilRequest->synced = 1;
-                $tempCilRequest->save();
-
-                DB::commit();
             } else {
                 Log::warning($logPrefix . "Data is null");
             }
+
+            $tempCilRequest->synced = 1;
+            $tempCilRequest->save();
+
+            DB::commit();
         }
         catch (Exception $exception) {
             DB::rollBack();
