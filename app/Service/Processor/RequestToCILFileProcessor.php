@@ -46,6 +46,9 @@ class RequestToCILFileProcessor
         }
         catch (Exception $exception) {
             DB::rollBack();
+
+            $tempCilRequest->synced = 0;
+            $tempCilRequest->save();
             Log::warning("RequestToCILFileProcessor: exception during adding CILFiles", [$exception]);
             return false;
         }
