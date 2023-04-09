@@ -1,9 +1,6 @@
 <?php
 
 use App\Http\Controllers\NomineeController;
-use App\Models\CilOrderRequest;
-use App\Models\CilOrderRequestSet;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,12 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $data = \Illuminate\Support\Facades\DB::connection('mysql')->table('cil_requests')
-        ->first();
-    return $data;
     return 'Hello, You are not supposed to be here';
 });
-
 
 Route::any('WebService/Nominee.asmx', [NomineeController::class, 'index']);
 Route::any('Webservice/Nominee.asmx', [NomineeController::class, 'index']);
