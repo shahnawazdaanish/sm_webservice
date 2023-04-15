@@ -6,6 +6,7 @@ use App\Entity\CILOrderResponse;
 use App\Entity\FinalAcceptOrderRequestResponse;
 use App\Entity\OrderRejectRFCRequest;
 use App\Entity\OrderRejectRFCRequestResponse;
+use App\Entity\OrderRequest;
 use App\Entity\OrderRequestResponse;
 use App\Entity\OrderRFCResponse;
 use App\Entity\OrderVersionResponse;
@@ -179,8 +180,10 @@ class NomineeService
 
         $getContractVersionRequest = $this->getContractVersionRequestConverter->convert($request);
 
+        $orderRequest = OrderRequest::where('RequestID' , $getContractVersionRequest->getRequestID())->first();
+
         $response = $this->prepareResponse($getContractVersionRequest->getRequestID());
-        $response->ContractVersion = '1';
+        $response->ContractVersion = $orderRequest->version ?? 'N/A';
 
         return (new RequestResponse())->setReturn($response);
     }
