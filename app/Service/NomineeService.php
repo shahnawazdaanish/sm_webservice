@@ -117,7 +117,7 @@ class NomineeService
         return (new RequestResponse())->setReturn($cilResponse);
     }
 
-    public function OrderRejectRFCRequest($request)
+    public function OrderRejectRFCRequest($request): RequestResponse
     {
         Log::info('Request ===> ' . json_encode($request));
         Log::info('Order Reject RFC Request', json_decode(json_encode($request), true));

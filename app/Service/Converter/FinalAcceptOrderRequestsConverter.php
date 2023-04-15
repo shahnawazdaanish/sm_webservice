@@ -13,6 +13,12 @@ class FinalAcceptOrderRequestsConverter implements ConverterServiceInterface
         $finalAcceptOrderRequests->setRequestID($request->RequestID);
         $finalAcceptOrderRequests->save();
 
+        if (isset($request->FinalAcceptOrderRequest) && is_object($request->FinalAcceptOrderRequest)) {
+            $requestObject = $request->FinalAcceptOrderRequest;
+            $request->FinalAcceptOrderRequest = [];
+            $request->FinalAcceptOrderRequest[] = $requestObject;
+        }
+
 
         $finalAcceptOrderRequestList = [];
         if (isset($request->FinalAcceptOrderRequest) && is_array($request->FinalAcceptOrderRequest)) {
