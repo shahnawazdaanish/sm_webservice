@@ -6,16 +6,21 @@ use App\Entity\Consumer\AcceptOrderRequest;
 use App\Entity\Consumer\AcceptOrderRequests;
 use App\Entity\Consumer\ChangeOrderRequest;
 use App\Entity\Consumer\ChangeOrderRequests;
+use App\Entity\Consumer\GetStickerRequest;
 use App\Entity\OrderRequest;
+use App\Entity\SkuTable;
+use App\Entity\Sticker;
 use App\Models\TempCILRequests;
+use App\Service\Converter\StickerFileXMLToCSVConverter;
+use App\Service\Converter\StickerXMLToStickerConverter;
 use App\Service\WebServiceConsumer\SportMasterWebServiceConsumer;
-use DateTime;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Label;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
@@ -76,8 +81,10 @@ class OrderViewScreen extends Screen
                 ->method('changeRequest'),
 
             Button::make('Get Stickers')
+                ->confirm('Are you sure to call?')
                 ->icon('docs')
                 ->method('getStickers')
+                ->parameters($parameters)
                 ->canSee($this->orderRequest->exists),
 
             Button::make('Send Event Request')
@@ -325,6 +332,59 @@ class OrderViewScreen extends Screen
                     }
                     return;
                 }
+            }
+        }
+
+        Toast::info('Response: ' . json_encode($response));
+    }
+
+    public function getStickers(Request $request): void
+    {
+        $isStickerPresent = Sticker::where('requestid', $request->get('requestID'))->count() >= 1;
+
+        if ($isStickerPresent) {
+            Toast::error('Stickers already fetched to database');
+            return;
+        }
+
+        $skuTables = SkuTable::where('requestid', $request->get('requestID'))->get();
+
+        if ($skuTables->count() === 0) {
+            Toast::error('No Sku present for this request');
+            return;
+        }
+
+        $skuArr = $skuTables->toArray();
+
+        $stickers = array_column($skuArr, 'stickerid');
+
+
+        $getStickerRequest = (new GetStickerRequest())
+            ->setRequestID($request->get('requestID'))
+            ->setParticipantID(env('PARTICIPANT_ID') ?? '')
+            ->setStickerID($stickers)
+            ->setJoinFile(false)
+        ;
+
+        $consumer = new SportMasterWebServiceConsumer();
+        $response = $consumer->getStickerRequest($getStickerRequest);
+
+        if (isset($response->return)) {
+            if (isset($response->return->Status)) {
+                $status = $response->return->Status;
+                $errorMessage = $response->return->ErrorMessage ?? '';
+
+                if ($status === true) {
+                    $stickerDocs = '<documents>' . implode('', $response->return->StickerFile) . '</documents>';
+                    (new StickerXMLToStickerConverter())
+                        ->convert(simplexml_load_string($stickerDocs), $request->get('requestID'))
+                    ;
+
+                    Alert::success('Stickers collected successfully');
+                } else {
+                    Toast::error('Cannot collect stickers, reason: ' . $errorMessage);
+                }
+                return;
             }
         }
 

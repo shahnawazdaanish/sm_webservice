@@ -3,6 +3,7 @@ namespace App\Service\WebServiceConsumer;
 
 use App\Entity\Consumer\AcceptOrderRequests;
 use App\Entity\Consumer\ChangeOrderRequests;
+use App\Entity\Consumer\GetStickerRequest;
 use App\Service\Client\SportMasterSoapClient;
 use SoapClient;
 use stdClass;
@@ -27,6 +28,13 @@ class SportMasterWebServiceConsumer
     {
         return $this->soapClient->ChangeOrderRequest(
             $this->wrapWithRequest($changeOrderRequests)
+        );
+    }
+
+    public function getStickerRequest(GetStickerRequest $getStickerRequest)
+    {
+        return $this->soapClient->GetStickerRequest(
+            $this->wrapWithRequest($getStickerRequest)
         );
     }
 

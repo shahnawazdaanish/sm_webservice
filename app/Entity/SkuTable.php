@@ -182,6 +182,4 @@ class SkuTable extends Model
         $this->StickerID = $StickerID;
         return $this;
     }
-
-
 }
