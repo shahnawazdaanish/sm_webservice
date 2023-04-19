@@ -18,15 +18,12 @@ class CILOrderRequestConverter implements ConverterServiceInterface
         $cilOrderRequest->setCILRequestNumber($request->CILRequestNumber ?? 0);
         $cilOrderRequest->save();
 
-        $tempCilRequest = new TempCILRequests(
-            [
-                'request_id' => $request->RequestID ?? '',
-                'order_id' => $request->OrderID ?? '',
-                'cil_request_number' => $request->CILRequestNumber ?? '0',
-                'data' => json_encode($request),
-                'created_at' => date('Y-m-d H:i:s'),
-            ]
-        );
+        $tempCilRequest = new TempCILRequests();
+        $tempCilRequest->request_id = $request->RequestID ?? '';
+        $tempCilRequest->order_id = $request->OrderID ?? '';
+        $tempCilRequest->cil_request_number = $request->CILRequestNumber ?? '0';
+        $tempCilRequest->data = json_encode($request);
+        $tempCilRequest->created_at = date('Y-m-d H:i:s');
         $tempCilRequest->save();
 
         return $cilOrderRequest;
