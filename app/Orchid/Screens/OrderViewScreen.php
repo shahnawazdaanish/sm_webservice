@@ -377,7 +377,7 @@ class OrderViewScreen extends Screen
                 $status = $response->return->Status;
                 $errorMessage = $response->return->ErrorMessage ?? '';
 
-                if ($status === true) {
+                if ($status === true && isset($response->return->StickerFile)) {
                     $stickerDocs = '<documents>' . implode('', $response->return->StickerFile) . '</documents>';
                     (new StickerXMLToStickerConverter())
                         ->convert(simplexml_load_string($stickerDocs), $request->get('requestID'))
