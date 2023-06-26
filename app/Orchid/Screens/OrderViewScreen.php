@@ -15,6 +15,7 @@ use App\Service\Converter\StickerFileXMLToCSVConverter;
 use App\Service\Converter\StickerXMLToStickerConverter;
 use App\Service\WebServiceConsumer\SportMasterWebServiceConsumer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
@@ -316,8 +317,12 @@ class OrderViewScreen extends Screen
             )
         ;
 
+        Log::info('ACCEPT ORDER DATA: ' . json_encode($acceptOrderRequests));
+
         $consumer = new SportMasterWebServiceConsumer();
         $response = $consumer->acceptOrderRequest($acceptOrderRequests);
+
+        Log::info('ACCEPT ORDER RESPONSE: ' . json_encode($response));
 
         if (isset($response->return)) {
             if (isset($response->return->OrderVersionResponse)) {
