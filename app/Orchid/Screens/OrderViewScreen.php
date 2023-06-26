@@ -317,8 +317,6 @@ class OrderViewScreen extends Screen
             )
         ;
 
-        Log::info('ACCEPT ORDER DATA: ' . json_encode($acceptOrderRequests));
-
         $consumer = new SportMasterWebServiceConsumer();
         $response = $consumer->acceptOrderRequest($acceptOrderRequests);
 
